@@ -1,0 +1,20 @@
+
+spring:
+  rsocket:
+    server:
+      port: 9002
+      transport: websocket
+  main:
+    web-application-type: none
+  data:
+    redis:
+      password: xhxxygwl
+      lettuce:
+        pool:
+          enabled: true
+    mongodb:
+      host: localhost
+      username: root
+      password: xhxxygwl
+      database: chat-record
+

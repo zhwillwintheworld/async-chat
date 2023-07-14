@@ -1,0 +1,13 @@
+spring:
+  r2dbc:
+    url: r2dbcs:mysql://127.0.0.1:3306/xxy
+    username: root
+    password: xhxxygwl
+  data:
+    redis:
+      password: xhxxygwl
+      lettuce:
+        pool:
+          enabled: true
+server:
+  port: 9001
