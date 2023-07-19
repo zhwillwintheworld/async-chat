@@ -1,4 +1,4 @@
-package com.xxy.chat.websocket.entity
+package com.xxy.chat.conn.entity
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

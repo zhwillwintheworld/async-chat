@@ -1,6 +1,6 @@
-package com.xxy.chat.websocket.dao
+package com.xxy.chat.conn.dao
 
-import com.xxy.chat.websocket.entity.MessageRecordEntity
+import com.xxy.chat.conn.entity.MessageRecordEntity
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import org.springframework.stereotype.Repository
 

@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.xxy.chat</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>conn</artifactId>
         </dependency>
     </dependencies>
 </project>

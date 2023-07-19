@@ -1,0 +1,13 @@
+
+spring:
+  data:
+    redis:
+      password: xhxxygwl
+      lettuce:
+        pool:
+          enabled: true
+    mongodb:
+      uri: mongodb://root:xhxxygwl@localhost:27017/
+      database: chat-record
+
+

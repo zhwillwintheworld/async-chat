@@ -1,4 +1,4 @@
-package com.xxy.chat.websocket.entity
+package com.xxy.chat.conn.entity
 
 import com.alibaba.fastjson2.JSONObject
 import com.xxy.chat.common.message.MessageInfo
