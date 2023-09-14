@@ -7,8 +7,10 @@ import com.xxy.chat.conn.holder.ConnectHolder
 import com.xxy.chat.conn.service.MessageService
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Mono
 
 @Service
 class MessageServiceImpl : MessageService {
@@ -19,12 +21,17 @@ class MessageServiceImpl : MessageService {
         return ConnectHolder.getStream(userId)
     }
 
-    override suspend fun sendMessage(sender: Long, message: MessageInfo) {
-        val data = MessageRecordEntity.transfer(message)
-        recordDao.save(data).asFlow().onEach {
-            ConnectHolder.getStream(data.sender.userId).emit(data.transfer())
-            data.receiver?.let { it1 -> ConnectHolder.getStream(it1.userId).emit(data.transfer()) }
-        }.collect()
+    override suspend fun sendMessage(sender: Long, message: Mono<MessageInfo>) {
+        message
+            .map { MessageRecordEntity.transfer(it) }
+            .let { recordDao.saveAll(it) }
+            .asFlow()
+            .onEach {
+                ConnectHolder.getStream(it.sender.userId).emit(it.transfer())
+                it.receiver?.let { it1 ->
+                    if (it1.userId != it.sender.userId) ConnectHolder.getStream(it1.userId).emit(it.transfer())
+                }
+            }.collect()
 
     }
 
