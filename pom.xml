@@ -21,13 +21,9 @@
         <module>tcp</module>
         <module>conn</module>
         <module>route</module>
+        <module>config</module>
 
     </modules>
-
-    <properties>
-        <java.version>17</java.version>
-        <kotlin.version>1.8.22</kotlin.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -67,6 +63,12 @@
         </dependency>
     </dependencies>
 
+    <properties>
+        <java.version>17</java.version>
+        <kotlin.version>1.8.22</kotlin.version>
+        <jetcd-version>0.7.6</jetcd-version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -93,6 +95,11 @@
                 <groupId>org.springframework.pulsar</groupId>
                 <artifactId>spring-pulsar-reactive-spring-boot-starter</artifactId>
                 <version>0.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.etcd</groupId>
+                <artifactId>jetcd-core</artifactId>
+                <version>${jetcd-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
