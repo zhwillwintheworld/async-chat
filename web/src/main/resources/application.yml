@@ -1,6 +1,6 @@
 spring:
   r2dbc:
-    url: r2dbcs:mysql://127.0.0.1:3306/xxy
+    url: r2dbcs:mysql://42.192.189.185:3306/xxy
     username: root
     password: xhxxygwl
   data:
@@ -9,8 +9,13 @@ spring:
       lettuce:
         pool:
           enabled: true
+      url: 154.8.154.116
+
 server:
   port: 9001
 
 config:
   packageName: "com.xxy.chat"
+
+etcd:
+  endpoints: "http://42.192.189.185:2379"

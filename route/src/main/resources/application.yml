@@ -1,0 +1,5 @@
+config:
+  packageName: "com.xxy.chat"
+
+etcd:
+  endpoints: "http://42.192.189.185:2379"
