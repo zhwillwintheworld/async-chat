@@ -7,4 +7,5 @@ import com.xxy.chat.config.annotation.EtcdProperties
 class WebAutoConfig {
     @EtcdProperties("/message")
     lateinit var hello:String
+
 }

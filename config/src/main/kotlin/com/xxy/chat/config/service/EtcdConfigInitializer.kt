@@ -10,23 +10,21 @@ import io.etcd.jetcd.watch.WatchEvent
 import io.etcd.jetcd.watch.WatchResponse
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
 import org.springframework.util.ReflectionUtils
 import java.io.File
 import javax.annotation.PostConstruct
-import kotlin.reflect.full.hasAnnotation
-
 
 
 @Component
 class EtcdConfigInitializer(
     private val client: Client,
-    private val context: ApplicationContext
-) {
-    @Value("config.packageName")
-    private lateinit var packageName: String
+    private val applicationContext: ApplicationContext
+)  {
+
+    @Value("\${config.packageName}")
+    lateinit var packageName: String
 
     private val storage: MutableMap<String, EtcdStorageInfo> = mutableMapOf()
 
@@ -77,9 +75,8 @@ class EtcdConfigInitializer(
                 val classNames = findClassNamesInDirectory(file, packageName)
                 for (className in classNames) {
                     val klass = Class.forName(className)
-                    val kClass = klass.kotlin
                     // 检查类上是否有注解
-                    if (kClass.hasAnnotation<EtcdConfigBean>()) {
+                    if (klass.getAnnotation(EtcdConfigBean::class.java)!=null) {
                         annotatedClasses.add(klass)
                     }
                 }
@@ -90,14 +87,20 @@ class EtcdConfigInitializer(
 
     private fun saveValueToBean(path: String, value: String) {
         val info = storage[path] ?: return
-        val bean = context.getBean(info.clazz)
+        val bean = this.applicationContext.getBean(info.clazz)
         if (info.flag) {
             val data = JSONObject.parseObject(value, info.clazz)
             BeanUtils.copyProperties(bean, data)
         } else {
-            val data = JSONObject.parseObject(value, info.filed!!.type)
-            ReflectionUtils.setField(info.filed!!, bean, data)
+            when(info.filed!!.type){
+                String::class.java -> ReflectionUtils.setField(info.filed!!, bean, value)
+                Int::class.java -> ReflectionUtils.setField(info.filed!!, bean, value.toInt())
+                Long::class.java -> ReflectionUtils.setField(info.filed!!, bean, value.toLong())
+                Double::class.java -> ReflectionUtils.setField(info.filed!!, bean, value.toDouble())
+                Any::class.java -> ReflectionUtils.setField(info.filed!!, bean, JSONObject.parseObject(value, info.filed!!.type))
+            }
         }
+        println("值发生了变化，对象为 ${JSONObject.toJSONString(bean)}")
     }
 
     private fun getEtcdWatchListener(): (WatchResponse) -> Unit {
@@ -129,5 +132,6 @@ class EtcdConfigInitializer(
         }
         return classNames
     }
+
 
 }
