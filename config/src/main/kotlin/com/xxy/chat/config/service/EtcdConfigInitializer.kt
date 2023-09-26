@@ -10,13 +10,14 @@ import io.etcd.jetcd.watch.WatchEvent
 import io.etcd.jetcd.watch.WatchResponse
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
 import org.springframework.util.ReflectionUtils
 import java.io.File
 import javax.annotation.PostConstruct
 
-
+@ConditionalOnBean(Client::class)
 @Component
 class EtcdConfigInitializer(
     private val client: Client,
@@ -30,7 +31,6 @@ class EtcdConfigInitializer(
 
     @PostConstruct
     fun init() {
-        println("执行初始化")
         val annotatedClasses = findClassesWithAnnotationInPackage(packageName)
         annotatedClasses.forEach { clazz ->
             val classAnnotation = clazz.getAnnotation(EtcdProperties::class.java)
@@ -100,7 +100,6 @@ class EtcdConfigInitializer(
                 Any::class.java -> ReflectionUtils.setField(info.filed!!, bean, JSONObject.parseObject(value, info.filed!!.type))
             }
         }
-        println("值发生了变化，对象为 ${JSONObject.toJSONString(bean)}")
     }
 
     private fun getEtcdWatchListener(): (WatchResponse) -> Unit {
