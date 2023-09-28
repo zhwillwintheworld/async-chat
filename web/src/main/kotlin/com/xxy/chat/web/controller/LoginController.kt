@@ -1,7 +1,7 @@
 package com.xxy.chat.web.controller
 
-import com.xxy.chat.common.bean.Result
-import com.xxy.chat.common.bean.UserLoginInfo
+import com.xxy.chat.common.bean.api.Result
+import com.xxy.chat.common.bean.api.UserLoginInfo
 import com.xxy.chat.web.param.UserLoginParam
 import com.xxy.chat.web.service.LoginService
 import kotlinx.coroutines.flow.Flow

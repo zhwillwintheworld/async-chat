@@ -1,8 +1,8 @@
 package com.xxy.chat.web.service.impl
 
 import com.alibaba.fastjson2.JSONObject
-import com.xxy.chat.common.bean.Result
-import com.xxy.chat.common.bean.UserLoginInfo
+import com.xxy.chat.common.bean.api.Result
+import com.xxy.chat.common.bean.api.UserLoginInfo
 import com.xxy.chat.common.exception.BizException
 import com.xxy.chat.common.exception.ErrorConstant
 import com.xxy.chat.common.util.Md5Util

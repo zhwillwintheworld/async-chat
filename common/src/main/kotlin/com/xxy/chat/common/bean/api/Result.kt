@@ -1,4 +1,4 @@
-package com.xxy.chat.common.bean
+package com.xxy.chat.common.bean.api
 
 import com.xxy.chat.common.exception.BizException
 import com.xxy.chat.common.exception.ErrorConstant

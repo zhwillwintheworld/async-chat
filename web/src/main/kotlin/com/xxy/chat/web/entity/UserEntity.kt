@@ -1,6 +1,6 @@
 package com.xxy.chat.web.entity
 
-import com.xxy.chat.common.bean.UserLoginInfo
+import com.xxy.chat.common.bean.api.UserLoginInfo
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
@@ -15,7 +15,7 @@ data class UserEntity(
     var status: Int,
     var avatar: String
 ){
-    fun transfer(token:String):UserLoginInfo{
+    fun transfer(token:String): UserLoginInfo {
        return UserLoginInfo(id,username,status,token,avatar)
     }
 }

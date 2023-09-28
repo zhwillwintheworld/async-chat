@@ -1,6 +1,6 @@
-package com.xxy.chat.common.bean
+package com.xxy.chat.common.bean.api
 
-class UserLoginInfo(
+data class UserLoginInfo(
     val userId: Long,
     val username: String,
     val status: Int,

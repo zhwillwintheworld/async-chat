@@ -1,7 +1,7 @@
 package com.xxy.chat.web.config
 
 import com.xxy.chat.common.exception.BizException
-import com.xxy.chat.common.bean.Result
+import com.xxy.chat.common.bean.api.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import org.springframework.web.bind.annotation.ExceptionHandler
